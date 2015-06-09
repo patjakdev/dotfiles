@@ -13,3 +13,6 @@
 [submodule "vim/bundle/vim-dispatch"]
 	path = vim/bundle/vim-dispatch
 	url = https://github.com/tpope/vim-dispatch.git
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
