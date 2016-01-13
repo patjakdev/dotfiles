@@ -79,7 +79,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-POWERLINE_ROOT=$HOME/.local/lib/python2.7/site-packages/powerline
+alias tmux="tmux -2"
+
+export POWERLINE_ROOT=$HOME/.local/lib/python2.7/site-packages/powerline
 powerline-daemon -q
 . $POWERLINE_ROOT/bindings/zsh/powerline.zsh
-
