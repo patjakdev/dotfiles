@@ -78,8 +78,28 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ag=rg --type c --type py
 
-POWERLINE_ROOT=$HOME/.local/lib/python2.7/site-packages/powerline
+export POWERLINE_ROOT=$HOME/.local/lib/python2.7/site-packages/powerline
 powerline-daemon -q
 . $POWERLINE_ROOT/bindings/zsh/powerline.zsh
 
+setopt extended_glob
+
+#          _                                  _
+#  ___ ___| |__         __ _  __ _  ___ _ __ | |_
+# / __/ __| '_ \ _____ / _` |/ _` |/ _ \ '_ \| __|
+# \__ \__ \ | | |_____| (_| | (_| |  __/ | | | |_
+# |___/___/_| |_|      \__,_|\__, |\___|_| |_|\__|
+#                            |___/
+#  FIGLET: ssh-agent
+
+# Start ssh-agent and prompt for creds if not already running
+if [[ -z $(ps -u $(whoami) | grep ssh-agent) ]]; then
+    eval $(ssh-agent) > /dev/null
+    ssh-add
+fi
+
+# Set ssh-agent environment variables
+export SSH_AUTH_SOCK=`echo $(ls -l /tmp/ssh-*/agent.*) | grep $(whoami) | awk '{print $9}'`
+export SSH_AGENT_PID=`ps -u $(whoami) | grep ssh-agent | awk '{print $1}'`
