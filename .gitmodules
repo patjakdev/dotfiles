@@ -31,3 +31,6 @@
 [submodule "vim/bundle/neomake"]
 	path = vim/bundle/neomake
 	url = https://github.com/neomake/neomake.git
+[submodule "vim/bundle/vim-mercenary"]
+	path = vim/bundle/vim-mercenary
+	url = https://github.com/jlfwong/vim-mercenary.git
