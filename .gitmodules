@@ -1,36 +1,24 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "vim/bundle/vim-colors-solarized"]
-	path = vim/bundle/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized
-[submodule "vim/bundle/supertab"]
-	path = vim/bundle/supertab
-	url = https://github.com/ervandew/supertab
-[submodule "vim/bundle/ctrlp.vim"]
-	path = vim/bundle/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim
-[submodule "vim/bundle/vim-dispatch"]
-	path = vim/bundle/vim-dispatch
-	url = https://github.com/tpope/vim-dispatch.git
-[submodule "oh-my-zsh"]
-	path = oh-my-zsh
-	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "vim/bundle/vim-signify"]
-	path = vim/bundle/vim-signify
-	url = https://github.com/mhinz/vim-signify
 [submodule "vim-tmux-navigator"]
 	path = vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule "vim/bundle/vim-tmux-navigator"]
-	path = vim/bundle/vim-tmux-navigator
-	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule "vim/bundle/ag.vim"]
-	path = vim/bundle/ag.vim
-	url = https://github.com/rking/ag.vim.git
-[submodule "vim/bundle/neomake"]
-	path = vim/bundle/neomake
-	url = https://github.com/neomake/neomake.git
-[submodule "vim/bundle/vim-mercenary"]
-	path = vim/bundle/vim-mercenary
-	url = https://github.com/jlfwong/vim-mercenary.git
+[submodule "vim/pack/pack/start/ag.vim"]
+	path = vim/pack/pack/start/ag.vim
+	url = https://github.com/rking/ag.vim
+[submodule "vim/pack/pack/start/neomake"]
+	path = vim/pack/pack/start/neomake
+	url = https://github.com/neomake/neomake
+[submodule "vim/pack/pack/start/vim-airline"]
+	path = vim/pack/pack/start/vim-airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "vim/pack/pack/start/vim-colors-solarized"]
+	path = vim/pack/pack/start/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized
+[submodule "vim/pack/pack/start/vim-commentary"]
+	path = vim/pack/pack/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule "vim/pack/pack/start/vim-tmux-navigator"]
+	path = vim/pack/pack/start/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator
