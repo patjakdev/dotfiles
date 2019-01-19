@@ -1,3 +1,5 @@
+let g:airline_powerline_fonts = 1
+
 packloadall
 helptags ~/.vim/pack
 
