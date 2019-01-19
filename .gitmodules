@@ -1,6 +1,9 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "oh-my-zsh"]
+    path = oh-my-zsh
+    url = https://github.com/robbyrussell/oh-my-zsh
 [submodule "vim-tmux-navigator"]
 	path = vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
