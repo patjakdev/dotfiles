@@ -1,4 +1,6 @@
-execute pathogen#infect('bundle/{}', '~/src/tools/editors/vim/bundle/{}')
+"execute pathogen#infect('bundle/{}', '~/src/tools/editors/vim/bundle/{}')
+packloadall
+helptags ~/.vim/pack
 
 syntax on
 
@@ -29,9 +31,11 @@ set incsearch       " Turn on incremental search
 "Brackets
 set showmatch       " Highlights the matching bracket
 
-"Windows
+"Splits
 set splitright
 set splitbelow
+nnoremap <silent> <Leader>= :resize +5<CR>
+nnoremap <silent> <Leader>- :resize -5<CR>
 
 "Columns
 set colorcolumn=+1
@@ -80,21 +84,6 @@ if has("cscope")
     nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
-"CtrlP
-let g:ctrlp_user_command = ['.hg', 'hg --cwd %s locate -I .']
-let g:ctrlp_lazy_update = 1
-
-"SuperTab
-let g:SuperTabDefaultCompletionType = "context"
-
-"Powerline
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
-
-" Signify
-let g:signify_vcs_list = [ 'hg', 'git' ]
-
 " Trailing whitespace
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -108,28 +97,59 @@ set timeoutlen=1000 ttimeoutlen=0
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" Qumulo
-" Build current associated test
-function! QbuildT()
-    let buffer = @%
-    let regex = '\(.*\)test\.[ch]'
-    if empty(matchstr(buffer, regex))
-        let file_to_build = matchlist(buffer, '\(.*\)\.[ch]')[1] . '_test.list'
-    else
-        let file_to_build = matchlist(buffer, '\(.*\)\.[ch]')[1] . '.list'
-    endif
-    execute "Make build/debug/" . file_to_build
-endfunction
+"   ___                        _
+"  / _ \ _   _ _ __ ___  _   _| | ___
+" | | | | | | | '_ ` _ \| | | | |/ _ \
+" | |_| | |_| | | | | | | |_| | | (_) |
+"  \__\_\\__,_|_| |_| |_|\__,_|_|\___/
 
-" Build current .o file
-function! QbuildO()
-    let buffer = @%
-    let file_to_build = matchlist(buffer, '\(.*\)\.[ch]')[1] . '.o'
-    execute "Make build/debug/" . file_to_build
-endfunction
+autocmd BufRead,BufNewFile *.h,*.c set filetype=c
 
-command! MakeT call QbuildT()
-command! MakeO call QbuildO()
+set makeprg=build
 
-nmap <F11> :MakeT<CR>
-nmap <F12> :MakeO<CR>
+let g:neomake_build_all_maker = {
+    \ 'exe': 'build',
+    \ 'args': ['--flavor=debug', '--keep-going'],
+    \ }
+
+let g:neomake_build_tags_maker = {
+    \ 'exe': 'build',
+    \ 'args': ['tags'],
+    \ }
+
+let g:neomake_c_gen_maker = {
+    \ 'exe': 'adt/adt_gen.py',
+    \ 'args': ['generate', '%'],
+    \ 'append_file': 0,
+    \ }
+
+let g:neomake_c_build_maker = {
+    \ 'exe': 'qonstruct/cc.py',
+    \ 'args': ['--flavor', 'debug_plain', 'proof', '%'],
+    \ 'append_file': 0,
+    \ }
+
+let g:neomake_c_lint_maker = {
+    \ 'exe': 'lint/all',
+    \ 'errorformat': '%f:%l: %m',
+    \ 'args': ['%'],
+    \ 'append_file': 0,
+    \ }
+
+let g:neomake_python_lint_maker = {
+    \ 'exe': 'lint/all',
+    \ 'args': ['%'],
+    \ 'append_file': 0,
+    \ }
+
+let g:neomake_c_enabled_makers = ['gen', 'build', 'lint']
+let g:neomake_python_enabled_makers = ['lint']
+let g:neomake_enabled_makers = ['build_all', 'build_tags']
+let g:neomake_serialize = 1
+let g:neomake_serialize_abort_on_error = 1
+let g:neomake_open_list = 2
+let g:neomake_verbose = 2
+let g:neomake_build_all_maker_buffer_output = 0
+
+" Call NeoMake on file write
+call neomake#configure#automake('w')
