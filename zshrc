@@ -1,11 +1,13 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/home/patrick/.oh-my-zsh
 
+DEFAULT_USER=patrick
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -45,14 +47,57 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git mercurial)
+#plugins=(git mercurial)
+plugins=(git)
 
 # User configuration
 
 export PATH="$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# XXX seems broken for now. Sigh.
+# export POWERLINE_ROOT=$HOME/.local/lib/python2.7/site-packages/powerline
+# powerline-daemon -q
+# . $POWERLINE_ROOT/bindings/zsh/powerline.zsh
+
 source $ZSH/oh-my-zsh.sh
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs)
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
+POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
+zstyle ':vcs_info:hg*:*' nopatch-format ""
+zstyle ':vcs_info:hg*:*' patch-format "%p"
+zstyle ':vcs_info:hg*+set-branch-format:*' hooks ignore-default-branch
+
+function +vi-ignore-default-branch() {
+    if [[ "${hook_com[branch]}" == "default" ]]; then
+        hook_com[branch-replace]=""
+        ret=1
+    else
+        hook_com[branch]="${hook_com[branch]} "
+    fi
+    return 0
+}
+
+zstyle ':vcs_info:hg*+set-patch-format:*' hooks fix-non-default-queues
+
+function +vi-fix-non-default-queues() {
+    queue=$(hg qqueue --active)
+    if [[ "$queue" != "patches" ]]; then
+        old_fg="$CURRENT_FG"
+        queue="%F{white}$(print_icon 'VCS_BRANCH_ICON')%F{$old_fg}$queue"
+        patch="$(hg qtop)"
+        if [[ "$patch" == "no patches applied" ]]; then
+            hook_com[patch-replace]="$queue"
+        else
+            hook_com[patch-replace]="$queue $patch"
+        fi
+        ret=1
+    fi
+    return 0
+}
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -79,12 +124,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias tmux="tmux -2"
-
-export POWERLINE_ROOT=$HOME/.local/lib/python2.7/site-packages/powerline
-powerline-daemon -q
-. $POWERLINE_ROOT/bindings/zsh/powerline.zsh
+alias qumulo="tmux -f ~/.tmux-qumulo.conf"
 
 setopt extended_glob
+unsetopt AUTO_CD
 
 #          _                                  _
 #  ___ ___| |__         __ _  __ _  ___ _ __ | |_
@@ -95,11 +138,5 @@ setopt extended_glob
 #  FIGLET: ssh-agent
 
 # Start ssh-agent and prompt for creds if not already running
-if [[ -z $(ps -u $(whoami) | grep ssh-agent) ]]; then
-    eval $(ssh-agent) > /dev/null
-    ssh-add
-fi
-
-# Set ssh-agent environment variables
-export SSH_AUTH_SOCK=`echo $(ls -l /tmp/ssh-*/agent.*) | grep $(whoami) | awk '{print $9}'`
-export SSH_AGENT_PID=`ps -u $(whoami) | grep ssh-agent | awk '{print $1}'`
+keychain -q id_rsa
+. ~/.keychain/`uname -n`-sh
