@@ -25,3 +25,6 @@
 [submodule "vim/pack/pack/start/vim-tmux-navigator"]
 	path = vim/pack/pack/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
+[submodule "vim/pack/pack/start/vim-airline-themes"]
+	path = vim/pack/pack/start/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes
