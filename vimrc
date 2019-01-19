@@ -1,4 +1,3 @@
-"execute pathogen#infect('bundle/{}', '~/src/tools/editors/vim/bundle/{}')
 packloadall
 helptags ~/.vim/pack
 
