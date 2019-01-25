@@ -131,14 +131,14 @@ let g:neomake_c_build_maker = {
     \ }
 
 let g:neomake_c_lint_maker = {
-    \ 'exe': 'lint/all',
+    \ 'exe': 'lint/c/__main__.py',
     \ 'errorformat': '%f:%l: %m',
     \ 'args': ['%'],
     \ 'append_file': 0,
     \ }
 
 let g:neomake_python_lint_maker = {
-    \ 'exe': 'lint/all',
+    \ 'exe': 'lint/py/__main__.py',
     \ 'args': ['%'],
     \ 'append_file': 0,
     \ }
