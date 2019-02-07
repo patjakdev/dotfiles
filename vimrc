@@ -39,8 +39,6 @@ nnoremap <silent> <Leader>= :resize +5<CR>
 nnoremap <silent> <Leader>- :resize -5<CR>
 
 "Columns
-set colorcolumn=+1
-set tw=80
 set formatoptions+=t
 
 "Breaking
