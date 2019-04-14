@@ -1,7 +1,40 @@
-let g:airline_powerline_fonts = 1
+" Airline
+let g:airline_powerline_fonts = 1 " Must be set before plugin is loaded
 
 packloadall
 helptags ~/.vim/pack
+
+" Airline
+let g:airline_theme = 'solarized'
+
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.maxlinenr = ''
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'c'  : 'C',
+      \ 'i'  : 'I',
+      \ 'ic' : 'I',
+      \ 'ix' : 'I',
+      \ 'n'  : 'N',
+      \ 'ni' : 'N',
+      \ 'no' : 'N',
+      \ 'R'  : 'R',
+      \ 'Rv' : 'V-REPLACE',
+      \ 's'  : 'S',
+      \ 'S'  : 'S-LINE',
+      \ '' : 'S-BLOCK',
+      \ 't'  : 'T',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V-LINE',
+      \ '' : 'V-BLOCK',
+      \ }
+
+call airline#parts#define('neomake', {'function': 'BuildStatus'})
+let g:airline_section_a = airline#section#create_left([
+        \'mode', 'crypt', 'paste', 'keymap', 'capslock', 'xkblayout', 'iminsert']) " Removed spell
+let g:airline_section_x = '' " Normally file type
+let g:airline_section_y = airline#section#create(['neomake']) " Normally encoding
+let g:airline_section_z = airline#section#create(['windowswap', 'obsession', 'linenr', 'maxlinenr', ':%3v'])
 
 syntax on
 
@@ -118,13 +151,13 @@ let g:neomake_build_tags_maker = {
 
 let g:neomake_c_gen_maker = {
     \ 'exe': 'adt/adt_gen.py',
-    \ 'args': ['generate', '%'],
+    \ 'args': ['--flavor', 'debug', 'generate', '%'],
     \ 'append_file': 0,
     \ }
 
 let g:neomake_c_build_maker = {
     \ 'exe': 'qonstruct/cc.py',
-    \ 'args': ['--flavor', 'debug_plain', 'proof', '%'],
+    \ 'args': ['--flavor', 'debug', 'proof', '%'],
     \ 'append_file': 0,
     \ }
 
@@ -147,8 +180,31 @@ let g:neomake_enabled_makers = ['build_all', 'build_tags']
 let g:neomake_serialize = 1
 let g:neomake_serialize_abort_on_error = 1
 let g:neomake_open_list = 2
-let g:neomake_verbose = 2
 let g:neomake_build_all_maker_buffer_output = 0
 
-" Call NeoMake on file write
-call neomake#configure#automake('w')
+call neomake#configure#automake('w') " Call Neomake on file write
+
+function! HandleBuildFinished()
+    for job in g:neomake_hook_context.finished_jobs
+        if job.exit_code != 0
+            let b:build_status = ''
+            return
+        endif
+    endfor
+
+    let b:build_status = ''
+endfunction
+
+function! HandleJobInit()
+    let b:build_status = 'Building...'
+endfunction
+
+function! BuildStatus()
+    return get(b:, 'build_status', '')
+endfunction
+
+augroup neomake_hooks
+    au!
+    autocmd User NeomakeJobInit :call HandleJobInit()
+    autocmd User NeomakeFinished :call HandleBuildFinished()
+augroup END
