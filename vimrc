@@ -129,6 +129,39 @@ set timeoutlen=1000 ttimeoutlen=0
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
+" Neomake
+let g:neomake_serialize = 1
+let g:neomake_serialize_abort_on_error = 1
+let g:neomake_open_list = 2
+let g:neomake_build_all_maker_buffer_output = 0
+
+call neomake#configure#automake('w') " Call Neomake on file write
+
+function! HandleBuildFinished()
+    for job in g:neomake_hook_context.finished_jobs
+        if job.exit_code != 0
+            let b:build_status = ''
+            return
+        endif
+    endfor
+
+    let b:build_status = ''
+endfunction
+
+function! HandleJobInit()
+    let b:build_status = 'Building...'
+endfunction
+
+function! BuildStatus()
+    return get(b:, 'build_status', '')
+endfunction
+
+augroup neomake_hooks
+    au!
+    autocmd User NeomakeJobInit :call HandleJobInit()
+    autocmd User NeomakeFinished :call HandleBuildFinished()
+augroup END
+
 "   ___                        _
 "  / _ \ _   _ _ __ ___  _   _| | ___
 " | | | | | | | '_ ` _ \| | | | |/ _ \
@@ -177,34 +210,3 @@ let g:neomake_python_lint_maker = {
 let g:neomake_c_enabled_makers = ['gen', 'build', 'lint']
 let g:neomake_python_enabled_makers = ['lint']
 let g:neomake_enabled_makers = ['build_all', 'build_tags']
-let g:neomake_serialize = 1
-let g:neomake_serialize_abort_on_error = 1
-let g:neomake_open_list = 2
-let g:neomake_build_all_maker_buffer_output = 0
-
-call neomake#configure#automake('w') " Call Neomake on file write
-
-function! HandleBuildFinished()
-    for job in g:neomake_hook_context.finished_jobs
-        if job.exit_code != 0
-            let b:build_status = ''
-            return
-        endif
-    endfor
-
-    let b:build_status = ''
-endfunction
-
-function! HandleJobInit()
-    let b:build_status = 'Building...'
-endfunction
-
-function! BuildStatus()
-    return get(b:, 'build_status', '')
-endfunction
-
-augroup neomake_hooks
-    au!
-    autocmd User NeomakeJobInit :call HandleJobInit()
-    autocmd User NeomakeFinished :call HandleBuildFinished()
-augroup END
