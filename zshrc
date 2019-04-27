@@ -121,7 +121,7 @@ function +vi-fix-non-default-queues() {
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias tmux="tmux -2"
-alias qumulo="tmux -f ~/.tmux-qumulo.conf"
+alias qumulo="PATH=/opt/qumulo/toolchain/bin:$PATH tmux"
 
 setopt extended_glob
 unsetopt AUTO_CD
