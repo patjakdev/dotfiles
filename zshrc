@@ -52,9 +52,6 @@ plugins=(git)
 
 # User configuration
 
-export PATH="$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-# export MANPATH="/usr/local/man:$MANPATH"
-
 # XXX seems broken for now. Sigh.
 # export POWERLINE_ROOT=$HOME/.local/lib/python2.7/site-packages/powerline
 # powerline-daemon -q
