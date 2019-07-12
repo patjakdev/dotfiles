@@ -183,7 +183,7 @@ let g:neomake_build_tags_maker = {
     \ }
 
 let g:neomake_c_gen_maker = {
-    \ 'exe': 'adt/adt_gen.py',
+    \ 'exe': 'qonstruct/generate.py',
     \ 'args': ['--flavor', 'debug', 'generate', '%'],
     \ 'append_file': 0,
     \ }
