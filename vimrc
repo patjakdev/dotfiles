@@ -129,6 +129,14 @@ set timeoutlen=1000 ttimeoutlen=0
 
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
+" From https://github.com/kovidgoyal/kitty/issues/108
+" vim hardcodes background color erase even if the terminfo file does
+" not contain bce (not to mention that libvte based terminals
+" incorrectly contain bce in their terminfo files). This causes
+" incorrect background rendering when using a color theme with a
+" background color.
+let &t_ut=''
+
 " Neomake
 let g:neomake_serialize = 1
 let g:neomake_serialize_abort_on_error = 1
