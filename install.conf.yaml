@@ -6,7 +6,7 @@
     ~/.tmux.conf: tmux.conf
     ~/.oh-my-zsh: oh-my-zsh
     ~/.zshrc: zshrc
-    ~/.config: config
+    ~/.config/i3/config: config/i3/config
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
