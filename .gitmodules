@@ -7,9 +7,6 @@
 [submodule "vim-tmux-navigator"]
 	path = vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule "vim/pack/pack/start/ag.vim"]
-	path = vim/pack/pack/start/ag.vim
-	url = https://github.com/rking/ag.vim
 [submodule "vim/pack/pack/start/neomake"]
 	path = vim/pack/pack/start/neomake
 	url = https://github.com/neomake/neomake
