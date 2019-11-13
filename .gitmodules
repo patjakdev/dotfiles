@@ -28,3 +28,6 @@
 [submodule "vim/pack/pack/start/vim-airline-themes"]
 	path = vim/pack/pack/start/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
+[submodule "vim/pack/pack/start/vim-ripgrep"]
+	path = vim/pack/pack/start/vim-ripgrep
+	url = https://github.com/jremmen/vim-ripgrep.git
