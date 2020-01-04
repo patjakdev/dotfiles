@@ -7,6 +7,7 @@
     ~/.oh-my-zsh: oh-my-zsh
     ~/.zshrc: zshrc
     ~/.config/i3/config: config/i3/config
+    ~/.config/systemd/user/ssh-agent.service: config/systemd/user/ssh-agent.service
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
