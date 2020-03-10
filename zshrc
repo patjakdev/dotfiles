@@ -126,3 +126,5 @@ alias fd="fdfind --ignore-file .hgignore"
 
 setopt extended_glob
 unsetopt AUTO_CD
+
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
