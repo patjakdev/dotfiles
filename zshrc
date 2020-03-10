@@ -122,6 +122,7 @@ function +vi-fix-non-default-queues() {
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias tmux="tmux -2"
 alias qumulo="PATH=/opt/qumulo/toolchain/bin:$PATH tmux"
+alias fd="fdfind --ignore-file .hgignore"
 
 setopt extended_glob
 unsetopt AUTO_CD
